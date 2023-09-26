@@ -1,0 +1,20 @@
+stages:
+  - deploy
+
+deploy-dev:
+  stage: deploy
+  image: amazon/aws-sam-cli:latest
+  script:
+    - sam validate -t template.yaml  # Validate the SAM template
+    - sam deploy --template-file template.yaml --stack-name jiraService --capabilities CAPABILITY_IAM
+  only:
+    - master  # You can configure this to match your branch/deployment strategy
+
+deploy-prod:
+  stage: deploy
+  image: amazon/aws-sam-cli:latest
+  script:
+    - sam validate -t template.yaml  # Validate the SAM template
+    - sam deploy --template-file template.yaml --stack-name jiraService --capabilities CAPABILITY_IAM --parameter-overrides LambdaServiceName='prod'
+  only:
+    - master  # You can configure this to match your branch/deployment strategy

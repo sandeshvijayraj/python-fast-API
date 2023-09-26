@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Parameters:
+  LambdaServiceName:
+    Type: String
+    Description: Name for the Lambda service
+    Default: 'dev'
+
+Resources:
+  FlaskApi:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/main.handler
+      Runtime: python3.8
+      CodeUri: ./
+      Timeout: 30
+      Environment:
+        Variables:
+          FLASK_ENV: !Sub '${LambdaServiceName}'
+      Events:
+        ApiGatewayEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+      FunctionName: !Sub '${LambdaServiceName}-FlaskApi'
+
+
+  ApiGateway:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: Prod
+
+Outputs:
+  FlaskApi:
+    Description: URL of the Flask API
+    Value: !Sub 'https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/'
