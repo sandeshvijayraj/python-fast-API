@@ -11,7 +11,7 @@ Resources:
   FlaskApi:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: src/main.handler
+      Handler: src/main.app
       Runtime: python3.8
       CodeUri: ./
       Timeout: 30

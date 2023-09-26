@@ -6,9 +6,7 @@ API for JIRA Microservice project
 - AWS SAM - for AWS deployment
 
 # How to test locally
-- Run:
-    - `cd src`
-    - `python -m uvicorn main:app`
+- Run: `python .\src\main.py`
 - endpoint base: `http://localhost:8000/`
 
 # Deployment

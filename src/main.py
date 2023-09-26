@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from handlers.jira import Jira
+import uvicorn
 
 from models.apiModels import PutJiraTicket
 
@@ -17,4 +18,7 @@ async def create_ticket(item: PutJiraTicket):
         raise HTTPException(401)
     data = await jira_handler.createJiraTicket(item)
     return data
+
+if __name__ == "__main__":
+    uvicorn.run(app, port=8080)
 
