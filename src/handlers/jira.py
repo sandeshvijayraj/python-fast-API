@@ -6,6 +6,6 @@ class Jira:
         # No need for validations
         try:
             # Call to middleware. can also do some transformation if needed.
-            return {"messag": input}
+            return input
         except:
             raise HTTPException(status_code=500, detail={"message": "Internal server error. Contact administrator"})
